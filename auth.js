@@ -1,13 +1,11 @@
 const express = require('express');
 const axios = require('axios');
 const bodyParser = require('body-parser');
-
 const app = express();
 const port = 3000;
 
-const client_id = 'ShanksRe-Inventor-PRD-95ec4ed98-41a5d4f1';
-const client_secret = 'PRD-5ec4ed988579-123f-45d9-a81b-0c07';
-const redirect_uri = 'Shanks_RedHair-ShanksRe-Invent-yvmkakqhx';
+require("dotenv").config();
+const { CLIENT_ID, CLIENT_SECRET,REDIRECT_URI } = process.env;
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -21,13 +19,13 @@ app.get('/', async (req, res) => {
     const data = new URLSearchParams({
         code: authorization_code,
         grant_type: 'authorization_code',
-        redirect_uri: redirect_uri,
+        redirect_uri: REDIRECT_URI,
         scope: 'https://api.ebay.com/oauth/api_scope https://api.ebay.com/oauth/api_scope/sell.marketing.readonly https://api.ebay.com/oauth/api_scope/sell.marketing https://api.ebay.com/oauth/api_scope/sell.inventory.readonly https://api.ebay.com/oauth/api_scope/sell.inventory https://api.ebay.com/oauth/api_scope/sell.account.readonly https://api.ebay.com/oauth/api_scope/sell.account https://api.ebay.com/oauth/api_scope/sell.fulfillment.readonly https://api.ebay.com/oauth/api_scope/sell.fulfillment https://api.ebay.com/oauth/api_scope/sell.analytics.readonly https://api.ebay.com/oauth/api_scope/sell.finances https://api.ebay.com/oauth/api_scope/sell.payment.dispute https://api.ebay.com/oauth/api_scope/commerce.identity.readonly https://api.ebay.com/oauth/api_scope/sell.reputation https://api.ebay.com/oauth/api_scope/sell.reputation.readonly https://api.ebay.com/oauth/api_scope/commerce.notification.subscription https://api.ebay.com/oauth/api_scope/commerce.notification.subscription.readonly https://api.ebay.com/oauth/api_scope/sell.stores https://api.ebay.com/oauth/api_scope/sell.stores.readonly',
     });
 
     const headers = {
         'Content-Type': 'application/x-www-form-urlencoded',
-        'Authorization': 'Basic ' + Buffer.from(`${client_id}:${client_secret}`).toString('base64'),
+        'Authorization': 'Basic ' + Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString('base64'),
     };
 
     try {
